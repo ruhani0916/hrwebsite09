@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Admin & Applicant Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('bg.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+    }
+
+    header h1 {
+      text-align: center;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      color: #172c3c;
+    }
+
+    .login-container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: rgb(230, 157, 211);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container {
+      display: block;
+    }
+
+    .dashboard-container,
+    .applicant-dashboard-container {
+      display: none;
+      margin: 50px;
+    }
+
+    .dashboard-container h1,
+    .applicant-dashboard-container h1 {
+      color: rgb(226, 124, 189);
+    }
+
+    label,
+    input,
+    button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #d24949;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #24ab98;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #7fbed8;
+    }
+
+    .card {
+      background-color: rgb(230, 151, 203);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #75cae6;
+    }
+
+    th {
+      background-color: #62a2d7;
+      color: white;
+    }
+
+    .team-name {
+      cursor: pointer;
+      color: #66b1dc;
+      text-decoration: underline;
+    }
+
+    .team-members {
+      display: none;
+    }
+
+    .resume-link {
+      color: #63b7d3;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .company
+
+    nav {
+      background-color: #d077bd;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo{
+        height: 200px;
+    }
+
+    nav img {
+      height: 150px;
+      margin-right: auto;
+      border-radius: 10%;
+    }
+
+    nav h1 {
+      color: rgb(224, 140, 182);
+      margin: 0;
+      margin-left: auto;
+    }
+
+    .section {
+      margin: 20px;
+    }
+
+    .applicant-form {
+      display: block;
+      background-color: rgb(214, 129, 176);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    .applicant-form input[type="file"] {
+      padding: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  
+  <header>
+    <nav>
+      <img class="logo" src="logo.jpg" alt="Company Logo">
+      <h1>TALENT TECH</h1>
+    </nav>
+  </header>
+
+
+  <div class="login-container" id="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="role">Role</label>
+      <select id="role" name="role">
+        <option value="admin">HR Admin</option>
+        <option value="applicant">Applicant</option>
+      </select>
+
+      <button type="submit">Login</button>
+      <p id="error-message" style="color:#d24949; display:none;">Invalid credentials. Please try again.</p>
+    </form>
+  </div>
+
+  <div class="dashboard-container" id="dashboard-container">
+    <h1>HR Admin Dashboard</h1>
+
+    
+    <div class="card">
+      <h2>Vacancies</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Department</th>
+            <th>Open Positions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Software Engineer</td>
+            <td>Development</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Marketing Executive</td>
+            <td>Marketing</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>UX/UI Designer</td>
+            <td>Design</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    
+    <div class="card">
+      <h2>Employee Portal</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Members</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="team-row" data-team="development">
+            <td class="team-name">Development</td>
+            <td>5</td>
+          </tr>
+          <tr class="team-members" id="development">
+            <td colspan="2">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Days Worked in August</th>
+                    <th>Leave Days</th>
+                    <th>Salary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Madhavi Reddy</td>
+                    <td>Senior Developer</td>
+                    <td>31</td>
+                    <td>1</td>
+                    <td>$80,000</td>
+                  </tr>
+                  <tr>
+                    <td>Pooja Mehta</td>
+                    <td>Junior Developer</td>
+                    <td>31</td>
+                    <td>3</td>
+                    <td>$70,000</td>
+                  </tr>
+                  <tr>
+                    <td>Aishwarya Gupta</td>
+                    <td>Full-Stack Developer</td>
+                    <td>31</td>
+                    <td>2</td>
+                    <td>$75,000</td>
+                  </tr>
+                  <tr>
+                    <td>Kiara Singh</td>
+                    <td>Back-End Developer</td>
+                    <td>31</td>
+                    <td>1</td>
+                    <td>$85,000</td>
+                  </tr>
+                  <tr>
+                    <td>Tanishka Rao</td>
+                    <td>DevOps Engineer</td>
+                    <td>31</td>
+                    <td>0</td>
+                    <td>$90,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+
+          <tr class="team-row" data-team="marketing">
+            <td class="team-name">Marketing</td>
+            <td>4</td>
+          </tr>
+          <tr class="team-members" id="marketing">
+            <td colspan="2">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Days Worked in August</th>
+                    <th>Leave Days</th>
+                    <th>Salary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Jiya Verma</td>
+                    <td>Marketing Lead</td>
+                    <td>31</td>
+                    <td>2</td>
+                    <td>$60,000</td>
+                  </tr>
+                  <tr>
+                    <td>Naina Joshi</td>
+                    <td>Marketing Specialist</td>
+                    <td>31</td>
+                    <td>3</td>
+                    <td>$55,000</td>
+                  </tr>
+                  <tr>
+                    <td>Sanya Sharma</td>
+                    <td>Content Strategist</td>
+                    <td>31</td>
+                    <td>1</td>
+                    <td>$50,000</td>
+                  </tr>
+                  <tr>
+                    <td>Rekha Saini</td>
+                    <td>SEO Analyst</td>
+                    <td>31</td>
+                    <td>0</td>
+                    <td>$52,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+
+          <tr class="team-row" data-team="design">
+            <td class="team-name">Design</td>
+            <td>3</td>
+          </tr>
+          <tr class="team-members" id="design">
+            <td colspan="2">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Days Worked in August</th>
+                    <th>Leave Days</th>
+                    <th>Salary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Alisha Patel</td>
+                    <td>Lead Designer</td>
+                    <td>31</td>
+                    <td>2</td>
+                    <td>$70,000</td>
+                  </tr>
+                  <tr>
+                    <td>Megha Yadav</td>
+                    <td>Graphic Designer</td>
+                    <td>31</td>
+                    <td>1</td>
+                    <td>$65,000</td>
+                  </tr>
+                  <tr>
+                    <td>Shreya Singh</td>
+                    <td>UI/UX Designer</td>
+                    <td>31</td>
+                    <td>2</td>
+                    <td>$68,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+ 
+  <div class="card">
+    <h2>University Tie-ups</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>University</th>
+          <th>Interns Recruited</th>
+          <th>Full-time Employees</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Chitkara University</td>
+          <td>15</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>Chandigarh University</td>
+          <td>10</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Punjab University</td>
+          <td>8</td>
+          <td>4</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+ 
+  <div class="card">
+    <h2>Resumes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Candidate Name</th>
+          <th>Status</th>
+          <th>View Resume</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ananya Patel</td>
+          <td>Shortlisted</td>
+          <td><a href="AnanyaPatel.pdf" class="resume-link" target="_blank">View Resume</a></td>
+        </tr>
+        <tr>
+          <td>Ishita Gupta</td>
+          <td>Waitlisted</td>
+          <td><a href="IshitaGupta.pdf" class="resume-link" target="_blank">View Resume</a></td>
+        </tr>
+        <tr>
+          <td>Saanvi Desai</td>
+          <td>Rejected</td>
+          <td><a href="SaanviDesai.pdf" class="resume-link" target="_blank">View Resume</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+  
+  <div class="applicant-dashboard-container" id="applicant-dashboard-container">
+    <h1>Applicant Dashboard</h1>
+    <div class="applicant-form">
+      <h2>Submit Your Resume</h2>
+      <form id="resumeForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="education">Education</label>
+        <input type="text" id="education" name="education" required>
+
+        <label for="experience">Previous Work Experience</label>
+        <input type="text" id="experience" name="experience" required>
+
+        <label for="skills">Skills</label>
+        <input type="text" id="skills" name="skills" required>
+
+        <label for="marksheet10">Upload 10th Marksheet</label>
+        <input type="file" id="marksheet10" name="marksheet10" accept="application/pdf" required>
+
+        <label for="marksheet12">Upload 12th Marksheet</label>
+        <input type="file" id="marksheet12" name="marksheet12" accept="application/pdf" required>
+
+        <label for="resume">Upload Resume</label>
+        <input type="file" id="resume" name="resume" accept="application/pdf" required>
+
+        <label for="interview-date">Select Interview Date</label>
+        <input type="date" id="interview-date" name="interview-date" required>
+
+
+        <button type="submit">Submit Resume</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var role = document.getElementById('role').value;
+      
+
+      if (username === 'admin' && password === 'admin' && role === 'admin') {
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('dashboard-container').style.display = 'block';
+      } else if (username === 'applicant' && password === 'applicant' && role === 'applicant') {
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('applicant-dashboard-container').style.display = 'block';
+      } else {
+        document.getElementById('error-message').style.display = 'block';
+      }
+    });
+
+    document.querySelectorAll('.team-name').forEach(function(element) {
+      element.addEventListener('click', function() {
+        var teamId = this.parentElement.nextElementSibling.id;
+        var membersRow = document.getElementById(teamId);
+        if (membersRow.style.display === 'none' || membersRow.style.display === '') {
+          membersRow.style.display = 'table-row';
+        } else {
+          membersRow.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
